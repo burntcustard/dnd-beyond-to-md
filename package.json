@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "demo": "tsx src/login.ts --google-user=burntcustard@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health"
+    "demo": "tsx index.ts --google-user=burntcustard@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health"
   },
   "author": "John Evans <john@burnt.io>",
   "license": "MIT",
