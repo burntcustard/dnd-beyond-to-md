@@ -4,16 +4,24 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "demo": "tsx index.ts --google-user=burntcustard@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health"
+    "demo": "tsx index.ts --google-user=burntcustard@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --host"
   },
   "author": "John Evans <john@burnt.io>",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^24.3.0",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "puppeteer-extra": "^3.3.6",
     "puppeteer": "^24.17.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+  "@tailwindcss/vite": "^4.0.0",
+  "tailwindcss": "^4.0.0",
+  "vite": "^5.4.19"
   }
 }

@@ -1,3 +1,4 @@
 node_modules/
 exports/
 .chrome-profile/
+dist/
