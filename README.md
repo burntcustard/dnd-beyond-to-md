@@ -17,5 +17,6 @@ npm install
 
 ### Usage
 ```bash
-npx tsx index.ts --google-user=your-google-account@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health
+npx tsx index.ts --google-user=example@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health
 ```
+
