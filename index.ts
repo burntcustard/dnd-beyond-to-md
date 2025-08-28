@@ -99,6 +99,7 @@ rarity: ${data.rarity}
 source: ${data.source}
 url: ${data.url}
 ---
+
 # ${data.name}
 
 *${data.info}*
