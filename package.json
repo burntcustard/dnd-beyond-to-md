@@ -1,21 +1,18 @@
 {
   "name": "dnd-beyond-to-md",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
     "demo": "tsx index.ts --google-user=burntcustard@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health"
   },
   "author": "John Evans <john@burnt.io>",
   "license": "MIT",
-  "description": "",
   "dependencies": {
-    "puppeteer": "^24.17.0",
-    "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2"
-  },
-  "devDependencies": {
     "@types/node": "^24.3.0",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer": "^24.17.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2"
   }
