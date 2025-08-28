@@ -4,6 +4,12 @@ import type { Page } from 'puppeteer';
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
+const googleUser = process.argv.find(arg => arg.startsWith('--google-user='))?.split('=')[1];
+if (!googleUser) throw new Error('Missing --google-user argument');
+
+const url = process.argv.find(arg => arg.startsWith('--url='))?.split('=')[1];
+if (!url) throw new Error('Missing --url argument');
+
 puppeteer.use(StealthPlugin());
 
 const browser = await puppeteer.launch({
@@ -15,6 +21,7 @@ const browser = await puppeteer.launch({
   ]
 });
 const [page] = await browser.pages();
+
 await page.setViewport({ width: 1280, height: 800 });
 await page.goto('https://www.dndbeyond.com/');
 
@@ -26,9 +33,6 @@ try {
   const popup: Page = await new Promise((resolve, reject) =>
     page.once('popup', p => p ? resolve(p) : reject())
   );
-
-  const googleUser = process.argv.find(arg => arg.startsWith('--google-user='))?.split('=')[1];
-  if (!googleUser) throw new Error('Missing --google-user argument');
 
   try {
     await popup.waitForSelector(`[data-identifier="${googleUser}"]`, { timeout: 1000 }).then(el => el?.click());
@@ -43,12 +47,8 @@ try {
   await new Promise<void>(resolve => popup.once('close', () => page.waitForNavigation().then(() => resolve())));
   console.info(`Logged in as ${googleUser}`);
 } catch {
-  console.info('Already logged in');
+  console.info(`Already logged in as ${googleUser}`);
 }
-
-// Go to magic item page that we want to scrape
-const url = process.argv.find(arg => arg.startsWith('--url='))?.split('=')[1];
-if (!url) throw new Error('Missing --url argument');
 
 await page.goto(url);
 
@@ -59,7 +59,8 @@ const source = await page.$eval('.source.item-source', el => el.textContent);
 const description = await page.$eval('.more-info-content', el => el.textContent);
 const rarity = itemInfo?.match(/\b(common|uncommon|rare|very rare|legendary|artifact|varies)\b/i)?.[1] ?? 'unknown';
 const itemType = itemInfo?.match(/\b(adventuring gear|armor|potion|ring|rod|scroll|staff|wand|weapon|wondrous item)\b/i)?.[1] ?? 'unknown';
-const consumable = itemInfo?.toLowerCase().includes('consumable') ?? false;
+const notes = description.includes('Notes') ? description.split('Notes: ')[1].trim() : ''
+const consumable = notes?.toLowerCase().includes('consumable') ?? false;
 
 const data = {
   name: name.trim(),
@@ -75,7 +76,7 @@ const data = {
   }[rarity],
   itemType,
   description: description.split('Notes')[0].trim().replace('\n', '\n\n') ?? '',
-  notes: description.includes('Notes') ? description.split('Notes: ')[1].trim() : '',
+  notes,
   attunement: itemInfo.includes('requires attunement'),
   cost: ({
     common: 100,
