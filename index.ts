@@ -90,7 +90,7 @@ const data = {
 
 console.log(data);
 
-const content = `
+const content = `${`
 ---
 attunement: ${data.attunement}
 cost: ${data.cost}
@@ -107,7 +107,7 @@ url: ${data.url}
 ${data.description}
 
 ${data.notes ? `*Notes: ${data.notes}*` : ''}
-`.trimStart();
+`.trim()}\n`;
 
 const exportsDir = 'exports';
 
