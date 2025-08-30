@@ -2,40 +2,17 @@
 
 Convert a [D&D Beyond](https://www.dndbeyond.com/) magic item page into Markdown for apps like [Obsidian](https://obsidian.md/).
 
-Now available in two ways:
+Available as a bookmarklet at or as an automated CLI tool which accepts a URL and a Google username.
 
-- Web app (static, GitHub Pages): runs entirely in your browser; downloads a .md file. No server.
-- CLI (original): automated with puppeteer and Google auth.
+## Bookmarklet
 
----
+1. Visit [burnt.io/dnd-beyond-to-md](https://burnt.io/dnd-beyond-to-md/).
+2. Bookmark the button link by dragging it into your bookmarks toolbar or copy-pasting the link into a new bookmark.
+3. Visit a magic item page on [D&D Beyond](https://www.dndbeyond.com/) like [Boots of Speed](https://www.dndbeyond.com/magic-items/4589-boots-of-speed).
+4. Click the bookmarklet.
+5. Receive markdown.
 
-## Web app (recommended)
-
-The web UI lives under `docs/` so it can be hosted by GitHub Pages.
-
-Deploy on your fork:
-
-1. Push to `main` with the `docs/` folder (already included).
-2. In GitHub → Settings → Pages, set Source to “Deploy from a branch”, Branch: `main`, Folder: `/docs`.
-3. Open the published URL (something like `https://<you>.github.io/dnd-beyond-to-md/`).
-
-Usage options in the web UI:
-
-- Enter URL: Works only if the page is public and CORS allows fetching.
-- Paste HTML: Copy-paste the page’s HTML source into the textarea, then convert.
-- Bookmarklet: Drag the button to your bookmarks bar, open an item on dndbeyond.com, click it. This is the most reliable for logged-in content since it reads the live DOM in your browser session.
-
-Direct bookmarklet page: once Pages is enabled, open `https://<you>.github.io/dnd-beyond-to-md/docs/bookmarklet.html` and drag the “DDB → MD” link to your bookmarks bar.
-
-Notes:
-
-- All parsing happens locally in your browser. No data is sent anywhere.
-- If CORS or login blocks fetching, use the Bookmarklet or Paste HTML options.
-- Scraping may be subject to the site’s Terms of Service; use responsibly.
-
----
-
-## CLI (original)
+## CLI
 
 Install:
 
@@ -51,30 +28,21 @@ Run:
 npx tsx index.ts --google-user=example@gmail.com --url=https://www.dndbeyond.com/magic-items/4568-amulet-of-health
 ```
 
-The CLI logs in (using a passkey via Google) and saves a Markdown file under `exports/`.
+The CLI logs in (using a passkey via Google) and saves a Markdown file in `exports/`.
 
 ---
 
 ## How it works
 
-Both the web app and CLI extract:
-
-- name, info line, item type, rarity, attunement
-- source, URL
-- description and optional Notes
-- a rough price heuristic based on rarity (consumables at half cost)
-
-Output frontmatter matches the CLI:
+Both the web app and CLI extract the same information out of the magic item page, putting the description in the body of the markdown file, with additional YAML properties:
 
 ```yaml
 ---
-attunement: <boolean>
-cost: <number>
-item type: <string>
-rarity: <string>
-source: <string>
-url: <string>
+attunement: <boolean> // a boolean true or false of whether or not the item requires attunement.
+cost: <number>        // a price number in gold pieces (gp) based on rarity, with consumables at half cost.
+item type: <string>   // e.g. adventuring gear, armor, potion, wondrous item.
+rarity: <string>      // common, uncommon, rare, ... artifact, or varies.
+source: <string>      // Source book. Shortends "Dungeon Master's Guide" to just "DMG".
+url: <string>         // The D&D Beyond source URL.
 ---
 ```
-
-And the body mirrors the item info and description.
