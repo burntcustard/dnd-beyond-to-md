@@ -38,9 +38,9 @@ Both the web app and CLI extract the same information out of the magic item page
 
 ```yaml
 ---
-attunement: <boolean> // a boolean true or false of whether or not the item requires attunement.
-cost: <number>        // a price number in gold pieces (gp) based on rarity, with consumables at half cost.
-item type: <string>   // e.g. adventuring gear, armor, potion, wondrous item.
+attunement: <boolean> // Boolean true or false of whether or not the item requires attunement.
+cost: <number>        // Price number in gold pieces based on rarity, with consumables at half cost.
+item type: <string>   // E.g. adventuring gear, armor, potion, wondrous item.
 rarity: <string>      // common, uncommon, rare, ... artifact, or varies.
 source: <string>      // Source book. Shortends "Dungeon Master's Guide" to just "DMG".
 url: <string>         // The D&D Beyond source URL.
