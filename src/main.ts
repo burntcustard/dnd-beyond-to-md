@@ -1,15 +1,12 @@
 import { bookmarklet } from './bookmarklet';
 
-function init() {
-  const rawIIFE = `(${bookmarklet.toString()})()`;
-  const href = `javascript:${encodeURIComponent(rawIIFE)}`;
-  const a = document.getElementById('bm') as HTMLAnchorElement | null;
+const rawIIFE = `(${bookmarklet.toString().replace(
+  /await\s+[\w$]+\([\s\S]*?import\((['"][^'")]+['"])\)[\s\S]*?import\.meta\.url\s*\)/g,
+  'await import($1)'
+)})()`;
 
-  if (!a) return;
+const a = document.getElementById('bookmarklet') as HTMLAnchorElement | null;
 
-  a.href = href;
-  a.setAttribute('draggable', 'true');
-  a.addEventListener('dragstart', (e) => e.dataTransfer?.setData('text/uri-list', href))
+if (a) {
+  a.href = `javascript:${encodeURIComponent(rawIIFE)}`;
 }
-
-init();
