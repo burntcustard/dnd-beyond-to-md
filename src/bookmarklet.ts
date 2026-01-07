@@ -1,6 +1,6 @@
 export async function bookmarklet(): Promise<void> {
     // @ts-ignore - allow importing by URL in this inline bookmarklet function
-    const { default: htmlToMarkdown } = await import('https://esm.sh/@wcj/html-to-markdown');
+    const { default: htmlToMarkdown } = await import('https://esm.sh/@wcj/html-to-markdown@2.1.1?bundle&target=es2024');
     const name = (document.querySelector('.page-title')?.textContent ?? '').trim() || 'Unknown Item';
     const itemInfo = (document.querySelector('.item-info .details')?.textContent ?? '').trim();
     const source = (document.querySelector('.source.item-source')?.textContent ?? '').trim() || 'Unknown Source';
